@@ -1,4 +1,4 @@
-package template.maze2D;
+package game;
 
 import java.math.BigDecimal;
 
@@ -34,7 +34,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		boolean resetVelocity = mazeGround.checkGridPoint(mazeSpritePlayer);
 
 		// 誤差による位置修正を行うため、プレイヤーのx成分とy成分が0.0の時、位置の値を切り上げる
-		if (mazeSpritePlayer.getVelocity().getX() == 0.0
+		/*if (mazeSpritePlayer.getVelocity().getX() == 0.0
 				&& mazeSpritePlayer.getVelocity().getY() == 0.0) {
 			mazeSpritePlayer.setPosition(new BigDecimal(mazeSpritePlayer
 					.getPosition().getX())
@@ -42,35 +42,35 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 			new BigDecimal(mazeSpritePlayer.getPosition().getY())
 			.setScale(0, BigDecimal.ROUND_HALF_UP)
 			.doubleValue());
-		}
+		}*/
 
 		// 速度が0.0にするフラグが立っていれば、速度を0にする
 		if (resetVelocity) {
-			//mazeSpritePlayer.setVelocity(0.0, 0.0);
-			disableControl = truesdsdd;
+			mazeSpritePlayer.setVelocity(0.0, 0.0);
+			disableControl = false;
 		}
 		// キャラが移動していなければ、キー操作の処理を行える。
 		if(!disableControl){
 			// キー操作の処理
 			// 左
 			if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
-				mazeSpritePlayer.moveLeft(5);
+				mazeSpritePlayer.setVelocity(-2.0, 0.0);
 				disableControl = true;
 			}
 			// 右
 			else if (virtualController.isKeyDown(0, RWTVirtualController.RIGHT)) {
-				mazeSpritePlayer.moveRight(5);
+				mazeSpritePlayer.setVelocity(2.0, 0.0);
 				disableControl = true;
 	
 			}
 			// 上
 			else if (virtualController.isKeyDown(0, RWTVirtualController.UP)) {
-				mazeSpritePlayer.moveUp(5);
+				mazeSpritePlayer.setVelocity(0.0, 2.0);
 				disableControl = true;
 			}
 			// 下
 			else if (virtualController.isKeyDown(0, RWTVirtualController.DOWN)) {
-				mazeSpritePlayer.moveDown(5);
+				mazeSpritePlayer.setVelocity(0.0, -2.0);
 				disableControl = true;
 			}
 		}
