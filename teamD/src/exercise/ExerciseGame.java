@@ -22,6 +22,8 @@ import framework.model3D.Universe;
 import framework.view3D.Camera3D;
 
 public class ExerciseGame extends SimpleShootingGame {
+	Sprite myShip;
+	
 	@Override
 	public void init(Universe universe) {
 		// 平行光源を配置する
@@ -40,16 +42,26 @@ public class ExerciseGame extends SimpleShootingGame {
         
 		// 背景を作成する
 		buildSkyBox(universe);
+		
+		myShip = new Sprite("data\\images\\MyShip.gif");
+		universe.place(myShip);
+		setViewRange(30, 30);
+		myShip.setPosition(0.0, 0.0);
 	}
 
 	@Override
 	public void progress(RWTVirtualController virtualController, long interval) {
-		
+		if (virtualController.isKeyDown(0, RWTVirtualController.RIGHT)) {
+			myShip.moveRight(5);
+		}
 	}
 
 	@Override
 	public RWTFrame3D createFrame3D() {
-		return null;
+		RWTFrame3D f = new RWTFrame3D();
+		f.setSize(800, 600);
+		f.setTitle("サンプルゲーム");
+		return f;
 	}
 	
 	/**
