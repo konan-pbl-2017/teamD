@@ -47,7 +47,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		// 速度が0.0にするフラグが立っていれば、速度を0にする
 		if (resetVelocity) {
 			//mazeSpritePlayer.setVelocity(0.0, 0.0);
-			disableControl = truesdsdd;
+			disableControl = true;
 		}
 		// キャラが移動していなければ、キー操作の処理を行える。
 		if(!disableControl){
