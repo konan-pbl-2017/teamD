@@ -1,17 +1,20 @@
 package game;
 
 import java.math.BigDecimal;
-import framework.game2D.Maze2D;
+import framework.game2D.Map2D;
 
 /**
  * 迷路ゲームのステージのクラス
  * @author T.Kuno
  *
  */
-public class MazeStage extends Maze2D {
+public class MazeStage extends Map2D {
 	// コンストラクタ
-	public MazeStage(String blockImage, String tileImage) {
-		super(blockImage, tileImage);
+	public MazeStage() {
+		super(new String[]{
+				"data\\images\\Tile.GIF",
+				"data\\images\\block.gif"},
+		1);
 	}
 	
 	// 抽象メソッドの実装
@@ -19,17 +22,17 @@ public class MazeStage extends Maze2D {
 	@Override
 	public int[][] createMap() {
 		int[][] map = {
-				{1,1,1,1,1,1,1,1,1,1,1},
-				{1,0,0,0,0,0,0,0,0,0,1},
-				{1,0,1,0,1,0,1,0,1,0,1},
-				{1,0,0,0,0,0,0,0,0,0,1},
-				{1,0,1,0,1,0,1,0,1,0,1},
-				{1,0,0,0,0,0,0,0,0,0,1},
-				{1,0,1,0,1,0,1,0,1,0,1},
-				{1,0,0,0,0,0,0,0,0,0,1},
-				{1,0,1,0,1,0,1,0,1,0,1},
-				{1,0,0,0,0,0,0,0,0,0,1},
-				{1,1,1,1,1,1,1,1,1,1,1}
+				{1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,0,0,0,0,0,0,0,0,0,0,0,1},
+				{1,0,1,0,1,0,1,0,1,0,1,0,1},
+				{1,0,0,0,0,0,0,0,0,0,0,0,1},
+				{1,0,1,0,1,0,1,0,1,0,1,0,1},
+				{1,0,0,0,0,0,0,0,0,0,0,0,1},
+				{1,0,1,0,1,0,1,0,1,0,1,0,1},
+				{1,0,0,0,0,0,0,0,0,0,0,0,1},
+				{1,0,1,0,1,0,1,0,1,0,1,0,1},
+				{1,0,0,0,0,0,0,0,0,0,0,0,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1}
 				
 //				{1,1,1,1,1},
 //				{1,0,0,0,1},

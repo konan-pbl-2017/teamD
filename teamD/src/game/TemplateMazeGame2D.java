@@ -56,7 +56,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	
 	@Override
 	public void init(Universe universe) {
-		mazeGround = new MazeStage("data\\images\\block.gif", "data\\images\\Tile.gif");
+		mazeGround = new MazeStage();
 		universe.place(mazeGround);
 		camera.addTarget(mazeGround);
 
