@@ -2,8 +2,10 @@ package game;
 
 import java.math.BigDecimal;
 
+import framework.RWT.RWTContainer;
 import framework.RWT.RWTFrame3D;
 import framework.RWT.RWTVirtualController;
+import framework.gameMain.IGameState;
 import framework.gameMain.SimpleMazeGame;
 import framework.model3D.Universe;
 
@@ -13,8 +15,44 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	
 	// 速度によって物体が動いている時にボタンを押せるかどうかを判定するフラグ
 	private boolean disableControl = false;
+	private IGameState startGameState = null;
+	private IGameState endingGameState = null;
 
 	private long lastTime;
+	
+	public TemplateMazeGame2D() {
+		startGameState = new IGameState() {
+			@Override
+			public void init(RWTFrame3D frame) {
+				TemplateMazeGame2D.this.mainFrame = frame;
+				RWTContainer container = new StartContainer(TemplateMazeGame2D.this);
+				changeContainer(container);
+			}
+			@Override
+			public boolean useTimer() {
+				return false;
+			}
+			@Override
+			public void update(RWTVirtualController virtualController, long interval) {
+			}
+		};
+		endingGameState = new IGameState() {
+			@Override
+			public void init(RWTFrame3D frame) {
+				TemplateMazeGame2D.this.mainFrame = frame;
+				RWTContainer container = new EndingContainer(TemplateMazeGame2D.this);
+				changeContainer(container);
+			}
+			@Override
+			public boolean useTimer() {
+				return false;
+			}
+			@Override
+			public void update(RWTVirtualController virtualController, long interval) {
+			}
+		};
+		setCurrentGameState(startGameState);
+	}
 	
 	@Override
 	public void init(Universe universe) {
@@ -26,6 +64,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		mazeSpritePlayer.setPosition(6.0, 2.0);
 		mazeSpritePlayer.setCollisionRadius(0.5);
 		universe.place(mazeSpritePlayer);
+		
 	}
 
 	@Override
@@ -168,6 +207,24 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		f.setTitle("Template for Mage 2DGame");
 		return f;
 	}
+		
+	public void restart() {
+		stop();
+		setCurrentGameState(startGameState);
+		start();
+	}
+	
+	public void play() {
+		stop();
+		setCurrentGameState(this);
+		start();
+	}
+	
+	public void ending() {
+		stop();
+		setCurrentGameState(endingGameState);
+		start();
+	}
 
 	/**
 	 * ゲームのメイン
@@ -179,5 +236,4 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		game.setFramePolicy(5, 33, false);
 		game.start();
 	}
-
 }

@@ -1,7 +1,6 @@
 package game;
 
 import java.math.BigDecimal;
-
 import framework.game2D.Map2D;
 
 /**

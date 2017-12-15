@@ -141,6 +141,24 @@ public abstract class SimpleMazeGame extends AbstractGame implements IGameState 
 			};
 	}
 	
+	protected void changeContainer(RWTContainer container) {
+		mainFrame.setContentPane(container);
+		GraphicsConfiguration gc = null;
+		if (mainFrame.isShadowCasting()) {
+
+			// 影を付ける場合
+			// ステンシルバッファを使用する GraphicsConfiguration の生成
+			GraphicsEnvironment ge = GraphicsEnvironment
+					.getLocalGraphicsEnvironment();
+			GraphicsDevice gd = ge.getDefaultScreenDevice();
+			GraphicsConfigTemplate3D gct3D = new GraphicsConfigTemplate3D();
+			gct3D.setStencilSize(8);
+			gc = gd.getBestConfiguration(gct3D);
+		}
+		container.build(gc);		
+	}
+
+	
 	/////////////////////////////////////////////////////////
 	//
 	// 2Dゲームにおけるカメラの設定や見え方、その範囲などに関するメソッド
