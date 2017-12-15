@@ -19,7 +19,7 @@ public class StartContainer extends RWTContainer {
 	@Override
 	public void build(GraphicsConfiguration gc) {
 		RWTLabel startLabel = new RWTLabel();
-		startLabel.setString("Start");
+		startLabel.setString("Black Santa333");
 		startLabel.setRelativePosition(0.3f, 0.5f);
 		Font f = new Font("", Font.PLAIN, 60);
 		startLabel.setFont(f);
