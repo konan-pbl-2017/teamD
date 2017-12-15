@@ -2,12 +2,24 @@ package game;
 
 import framework.RWT.RWTFrame3D;
 import framework.RWT.RWTVirtualController;
+import framework.model3D.Universe;
 
 public class Title {
+	
+	int scene;
+
+	
+	public void init(Universe universe) {
+		scene = 1;
+	}
+
+	public void progress(RWTVirtualController virtualController, long interval) {
+		if (virtualController.isKeyDown(0, RWTVirtualController.BUTTON_C)) {
+			scene = 2;
+		}
+	}
 
 	public static void main(String[] args) {
-
-		int scene = 1;
 
 		switch(scene){
 		case 1:
@@ -16,10 +28,6 @@ public class Title {
 			f.setTitle("Black Santa");
 			f.setVisible(true);
 			
-
-			if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
-				scene = 2;
-			}
 			System.out.println("ƒ^ƒCƒgƒ‹");
 			break;
 		case 2: 
