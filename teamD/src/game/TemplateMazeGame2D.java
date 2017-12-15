@@ -18,26 +18,26 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	// 速度によって物体が動いている時にボタンを押せるかどうかを判定するフラグ
 	private boolean disableControl = false;
 
-	private long lastTime;
-	
-	@Override
-	public void init(Universe universe) {
-		mazeGround = new MazeStage("data\\images\\block.gif", "data\\images\\Tile.gif");
-		universe.place(mazeGround);
-		camera.addTarget(mazeGround);
-
-		//1P
-		Player1 = new MazeSpritePlayer("data\\RPG\\player.png");
-		Player1.setPosition(2.0, 2.0);
-		Player1.setCollisionRadius(0.5);
-		universe.place(Player1);
+		private long lastTime;
 		
-		//2P
-		Player2 = new MazeSpritePlayer("data\\RPG\\player.png");
-		Player2.setPosition(18.0, 18.0);
-		Player2.setCollisionRadius(0.5);
-		universe.place(Player2);
-	}
+		@Override
+		public void init(Universe universe) {
+			mazeGround = new MazeStage("data\\images\\block.gif", "data\\images\\Tile.gif");
+			universe.place(mazeGround);
+			camera.addTarget(mazeGround);
+	
+			//1P
+			Player1 = new MazeSpritePlayer("data\\RPG\\player.png");
+			Player1.setPosition(2.0, 2.0);
+			Player1.setCollisionRadius(0.5);
+			universe.place(Player1);
+			
+			//2P
+			Player2 = new MazeSpritePlayer("data\\RPG\\player.png");
+			Player2.setPosition(18.0, 18.0);
+			Player2.setCollisionRadius(0.5);
+			universe.place(Player2);
+		}
 	
 
 	@Override
@@ -80,6 +80,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 			disableControl = false;
 		}
 		
+		// 1P
 		// キャラが移動していなければ、キー操作の処理を行える。
 		if(!disableControl){
 			// キー操作の処理
@@ -105,7 +106,30 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 			}
 		}
 		Player1.motion(interval, mazeGround);
+		
+		//2P
+		if (virtualController.isKeyDown(1, RWTVirtualController.LEFT)) {
+			Player2.setVelocity(-speed, 0.0);
+			disableControl = true;
+		}
+		// 右
+		else if (virtualController.isKeyDown(1, RWTVirtualController.RIGHT)) {
+			Player2.setVelocity(speed, 0.0);
+			disableControl = true;
+		}
+		// 上
+		else if (virtualController.isKeyDown(1, RWTVirtualController.UP)) {
+			Player2.setVelocity(0.0, speed);
+			disableControl = true;
+		}
+		// 下
+		else if (virtualController.isKeyDown(1, RWTVirtualController.DOWN)) {
+			Player2.setVelocity(0.0, -speed);
+			disableControl = true;
+		}
+	Player2.motion(interval, mazeGround);
 	}
+	
 	
 	// public void progress(RWTVirtualController virtualController, long
 	// interval) {
