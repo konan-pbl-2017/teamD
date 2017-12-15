@@ -18,7 +18,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	
 	@Override
 	public void init(Universe universe) {
-		mazeGround = new MazeStage("data\\images\\block.gif", "data\\images\\Tile.gif");
+		mazeGround = new MazeStage();
 		universe.place(mazeGround);
 		camera.addTarget(mazeGround);
 
@@ -44,7 +44,11 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 			.doubleValue());
 		}
 
-
+		// 速度が0.0にするフラグが立っていれば、速度を0にする
+		if (resetVelocity) {
+			mazeSpritePlayer.setVelocity(0.0, 0.0);
+			disableControl = false;
+		}
 		// キャラが移動していなければ、キー操作の処理を行える。
 		if(!disableControl){
 			// キー操作の処理
