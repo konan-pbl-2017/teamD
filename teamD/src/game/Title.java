@@ -1,6 +1,7 @@
 package game;
 
 import framework.RWT.RWTFrame3D;
+import framework.RWT.RWTVirtualController;
 
 public class Title {
 
@@ -14,6 +15,11 @@ public class Title {
 			f.setSize(800, 800);
 			f.setTitle("Black Santa");
 			f.setVisible(true);
+			
+
+			if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
+				scene = 2;
+			}
 			System.out.println("ƒ^ƒCƒgƒ‹");
 			break;
 		case 2: 
