@@ -45,8 +45,8 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		// 迷路ゲームステージを構成するオブジェクトの位置とプレイヤーの位置をもとに速度を0にするかどうかを調べる。
 		boolean resetVelocity = mazeGround.checkGridPoint(Player1, Player2);
 
-		//1P
 		// 誤差による位置修正を行うため、プレイヤーのx成分とy成分が0.0の時、位置の値を切り上げる
+		//1P
 		if (Player1.getVelocity().getX() == 0.0
 				&& Player1.getVelocity().getY() == 0.0) {
 			Player1.setPosition(new BigDecimal(Player1
@@ -84,22 +84,22 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		// キャラが移動していなければ、キー操作の処理を行える。
 		if(!disableControl){
 			// キー操作の処理
-			// 左
+			// 左 : a
 			if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
 				Player1.setVelocity(-speed, 0.0);
 				disableControl = true;
 			}
-			// 右
+			// 右 : d
 			else if (virtualController.isKeyDown(0, RWTVirtualController.RIGHT)) {
 				Player1.setVelocity(speed, 0.0);
 				disableControl = true;
 			}
-			// 上
+			// 上 : w
 			else if (virtualController.isKeyDown(0, RWTVirtualController.UP)) {
 				Player1.setVelocity(0.0, speed);
 				disableControl = true;
 			}
-			// 下
+			// 下 : s
 			else if (virtualController.isKeyDown(0, RWTVirtualController.DOWN)) {
 				Player1.setVelocity(0.0, -speed);
 				disableControl = true;
@@ -108,21 +108,22 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		Player1.motion(interval, mazeGround);
 		
 		//2P
+		// 左 : k
 		if (virtualController.isKeyDown(1, RWTVirtualController.LEFT)) {
 			Player2.setVelocity(-speed, 0.0);
 			disableControl = true;
 		}
-		// 右
+		// 右 : ;
 		else if (virtualController.isKeyDown(1, RWTVirtualController.RIGHT)) {
 			Player2.setVelocity(speed, 0.0);
 			disableControl = true;
 		}
-		// 上
+		// 上 : o
 		else if (virtualController.isKeyDown(1, RWTVirtualController.UP)) {
 			Player2.setVelocity(0.0, speed);
 			disableControl = true;
 		}
-		// 下
+		// 下 : l
 		else if (virtualController.isKeyDown(1, RWTVirtualController.DOWN)) {
 			Player2.setVelocity(0.0, -speed);
 			disableControl = true;
