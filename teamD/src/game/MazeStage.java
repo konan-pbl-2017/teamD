@@ -18,6 +18,7 @@ public class MazeStage extends Map2D {
 		1);
 	}
 	
+	
 	// 抽象メソッドの実装
 	//　0:タイル　1:ブロック　
 	@Override
