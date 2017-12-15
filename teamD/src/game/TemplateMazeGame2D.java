@@ -9,9 +9,9 @@ import framework.model3D.Universe;
 
 public class TemplateMazeGame2D extends SimpleMazeGame {
 	
-	double speed = 5.0;
+	double speed = 8.0;
 	
-	private MazeSpritePlayer mazeSpritePlayer;
+	private MazeSpritePlayer Player1;
 	private MazeStage mazeGround;
 	
 	// 速度によって物体が動いている時にボタンを押せるかどうかを判定するフラグ
@@ -25,32 +25,32 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		universe.place(mazeGround);
 		camera.addTarget(mazeGround);
 
-		mazeSpritePlayer = new MazeSpritePlayer("data\\RPG\\player.png");
-		mazeSpritePlayer.setPosition(6.0, 2.0);
-		mazeSpritePlayer.setCollisionRadius(0.5);
-		universe.place(mazeSpritePlayer);
+		Player1 = new MazeSpritePlayer("data\\RPG\\player.png");
+		Player1.setPosition(6.0, 2.0);
+		Player1.setCollisionRadius(0.5);
+		universe.place(Player1);
 	}
 	
 
 	@Override
 	public void progress(RWTVirtualController virtualController, long interval) {
 		// 迷路ゲームステージを構成するオブジェクトの位置とプレイヤーの位置をもとに速度を0にするかどうかを調べる。
-		boolean resetVelocity = mazeGround.checkGridPoint(mazeSpritePlayer);
+		boolean resetVelocity = mazeGround.checkGridPoint(Player1);
 
 		// 誤差による位置修正を行うため、プレイヤーのx成分とy成分が0.0の時、位置の値を切り上げる
-		if (mazeSpritePlayer.getVelocity().getX() == 0.0
-				&& mazeSpritePlayer.getVelocity().getY() == 0.0) {
-			mazeSpritePlayer.setPosition(new BigDecimal(mazeSpritePlayer
+		if (Player1.getVelocity().getX() == 0.0
+				&& Player1.getVelocity().getY() == 0.0) {
+			Player1.setPosition(new BigDecimal(Player1
 					.getPosition().getX())
 			.setScale(0, BigDecimal.ROUND_HALF_UP).doubleValue(),
-			new BigDecimal(mazeSpritePlayer.getPosition().getY())
+			new BigDecimal(Player1.getPosition().getY())
 			.setScale(0, BigDecimal.ROUND_HALF_UP)
 			.doubleValue());
 		}
 
 		// 速度が0.0にするフラグが立っていれば、速度を0にする
 		if (resetVelocity) {
-			mazeSpritePlayer.setVelocity(0.0, 0.0);
+			Player1.setVelocity(0.0, 0.0);
 			disableControl = false;
 		}
 		// キャラが移動していなければ、キー操作の処理を行える。
@@ -58,29 +58,27 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 			// キー操作の処理
 			// 左
 			if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
-				mazeSpritePlayer.setVelocity(-speed, 0.0);
+				Player1.setVelocity(-speed, 0.0);
 				disableControl = true;
 			}
 			// 右
 			else if (virtualController.isKeyDown(0, RWTVirtualController.RIGHT)) {
-				mazeSpritePlayer.setVelocity(speed, 0.0);
+				Player1.setVelocity(speed, 0.0);
 				disableControl = true;
 			}
 			// 上
 			else if (virtualController.isKeyDown(0, RWTVirtualController.UP)) {
-				mazeSpritePlayer.setVelocity(0.0, speed);
+				Player1.setVelocity(0.0, speed);
 				disableControl = true;
 			}
 			// 下
 			else if (virtualController.isKeyDown(0, RWTVirtualController.DOWN)) {
-				mazeSpritePlayer.setVelocity(0.0, -speed);
+				Player1.setVelocity(0.0, -speed);
 				disableControl = true;
 			}
 		}
-		mazeSpritePlayer.motion(interval, mazeGround);
+		Player1.motion(interval, mazeGround);
 	}
-	
-	
 	
 	// public void progress(RWTVirtualController virtualController, long
 	// interval) {
