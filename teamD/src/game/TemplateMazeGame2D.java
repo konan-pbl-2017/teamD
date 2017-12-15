@@ -12,6 +12,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	double speed = 8.0;
 	
 	private MazeSpritePlayer Player1;
+	private MazeSpritePlayer Player2;
 	private MazeStage mazeGround;
 	
 	// 速度によって物体が動いている時にボタンを押せるかどうかを判定するフラグ
@@ -25,10 +26,17 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		universe.place(mazeGround);
 		camera.addTarget(mazeGround);
 
+		//1P
 		Player1 = new MazeSpritePlayer("data\\RPG\\player.png");
-		Player1.setPosition(6.0, 2.0);
+		Player1.setPosition(2.0, 2.0);
 		Player1.setCollisionRadius(0.5);
 		universe.place(Player1);
+		
+		//2P
+		Player2 = new MazeSpritePlayer("data\\RPG\\player.png");
+		Player2.setPosition(18.0, 18.0);
+		Player2.setCollisionRadius(0.5);
+		universe.place(Player2);
 	}
 	
 
@@ -37,6 +45,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		// 迷路ゲームステージを構成するオブジェクトの位置とプレイヤーの位置をもとに速度を0にするかどうかを調べる。
 		boolean resetVelocity = mazeGround.checkGridPoint(Player1);
 
+		//1P
 		// 誤差による位置修正を行うため、プレイヤーのx成分とy成分が0.0の時、位置の値を切り上げる
 		if (Player1.getVelocity().getX() == 0.0
 				&& Player1.getVelocity().getY() == 0.0) {
@@ -53,6 +62,24 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 			Player1.setVelocity(0.0, 0.0);
 			disableControl = false;
 		}
+		
+		//2P
+		if (Player2.getVelocity().getX() == 0.0
+				&& Player2.getVelocity().getY() == 0.0) {
+			Player2.setPosition(new BigDecimal(Player2
+					.getPosition().getX())
+			.setScale(0, BigDecimal.ROUND_HALF_UP).doubleValue(),
+			new BigDecimal(Player2.getPosition().getY())
+			.setScale(0, BigDecimal.ROUND_HALF_UP)
+			.doubleValue());
+		}
+
+		// 速度が0.0にするフラグが立っていれば、速度を0にする
+		if (resetVelocity) {
+			Player2.setVelocity(0.0, 0.0);
+			disableControl = false;
+		}
+		
 		// キャラが移動していなければ、キー操作の処理を行える。
 		if(!disableControl){
 			// キー操作の処理
