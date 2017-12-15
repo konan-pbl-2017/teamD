@@ -44,7 +44,7 @@ public abstract class Map2D implements Placeable {
 		// 配置位置は配置基準点から幅2.0、高さ2.0のオブジェクトを生成する。
 		// 例えば(2.0 2.0）の位置に生成する場合は(2.0,2.0)(4.0,2.0)(2.0,4.0)(4.0,4.0)のこの4点がブロックの角となる
 		//　これを基準に衝突判定などゲームにおける処理を行っている。
-		for (int i = 0; i < map.length; i++) {
+		for (int i = 0; i < map[0].length; i++) {
 			for (int j = 0; j < map.length; j++) {
 				
 				if (map[map.length - 1 - j][i] < blockId) {
@@ -67,7 +67,7 @@ public abstract class Map2D implements Placeable {
 			}
 		}
 		// マップの中心にカメラが中止するようにマップの幅・高さを計算する。
-		mapWidth = map.length * 2;
+		mapWidth = map[0].length * 2;
 		mapHeight = map.length * 2;		
 	}
 
