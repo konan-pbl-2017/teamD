@@ -46,20 +46,41 @@ public class MazeStage extends Maze2D {
 		return map;
 	}
 
-	public boolean checkGridPoint(MazeSpritePlayer mazeSpritePlayer) {
+	public boolean checkGridPoint(MazeSpritePlayer Player1,MazeSpritePlayer Player2) {
 		// 丸め誤差処理用変数の生成
-		double mazeSpritePositionX = new BigDecimal(mazeSpritePlayer
+		//1P
+		double mazeSpritePositionX1 = new BigDecimal(Player1
 				.getPosition().getX()).setScale(1, BigDecimal.ROUND_DOWN)
 				.doubleValue();
-		double mazeSpritePositionY = new BigDecimal(mazeSpritePlayer
+		double mazeSpritePositionY1 = new BigDecimal(Player1
 				.getPosition().getY()).setScale(1, BigDecimal.ROUND_DOWN)
 				.doubleValue();
 		
+		//2P
+		double mazeSpritePositionX2 = new BigDecimal(Player2
+				.getPosition().getX()).setScale(1, BigDecimal.ROUND_DOWN)
+				.doubleValue();
+		double mazeSpritePositionY2 = new BigDecimal(Player2
+				.getPosition().getY()).setScale(1, BigDecimal.ROUND_DOWN)
+				.doubleValue();
+
 		// ステージの構成オブジェクトの位置とプレイヤーの位置が同じかどうかっ判定する
+		//1P
 		for (int i = 0; i < this.getStageObjectList().size(); i++) {
 			if (
-					mazeSpritePositionX == this.getStageObjectList().get(i).getPosition().getX()
-					&& mazeSpritePositionY == this.getStageObjectList().get(i).getPosition().getY()
+					mazeSpritePositionX1 == this.getStageObjectList().get(i).getPosition().getX()
+					&& mazeSpritePositionY1 == this.getStageObjectList().get(i).getPosition().getY()
+				){
+				return true;
+			}
+
+		}
+		
+		//2P
+		for (int i = 0; i < this.getStageObjectList().size(); i++) {
+			if (
+					mazeSpritePositionX2 == this.getStageObjectList().get(i).getPosition().getX()
+					&& mazeSpritePositionY2 == this.getStageObjectList().get(i).getPosition().getY()
 				){
 				return true;
 			}

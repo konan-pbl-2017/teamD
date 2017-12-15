@@ -43,7 +43,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	@Override
 	public void progress(RWTVirtualController virtualController, long interval) {
 		// 迷路ゲームステージを構成するオブジェクトの位置とプレイヤーの位置をもとに速度を0にするかどうかを調べる。
-		boolean resetVelocity = mazeGround.checkGridPoint(Player1);
+		boolean resetVelocity = mazeGround.checkGridPoint(Player1, Player2);
 
 		//1P
 		// 誤差による位置修正を行うため、プレイヤーのx成分とy成分が0.0の時、位置の値を切り上げる
