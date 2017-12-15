@@ -72,3 +72,4 @@ public class MazeStage extends Map2D {
 	}
 }
 
+
