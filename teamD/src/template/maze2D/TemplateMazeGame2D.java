@@ -11,6 +11,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	private MazeSpritePlayer mazeSpritePlayer;
 	private MazeStage mazeGround;
 	private bomb bom;
+	int bcount = 0;
 	
 	// 速度によって物体が動いている時にボタンを押せるかどうかを判定するフラグ
 	private boolean disableControl = false;
@@ -24,7 +25,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		camera.addTarget(mazeGround);
 
 		mazeSpritePlayer = new MazeSpritePlayer("data\\RPG\\player.png");
-		bom = new bomb("data\\images\\MyShip.gif");
+		bom[] = new bomb[3]("data\\images\\MyShip.gif");
 		mazeSpritePlayer.setPosition(6.0, 2.0);
 		mazeSpritePlayer.setCollisionRadius(0.5);
 		universe.place(mazeSpritePlayer);
@@ -76,12 +77,15 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 				//bom.setPosition(mazeSpritePlayer.getPosition().getX(),mazeSpritePlayer.getPosition().getY());
 				//universe.place(bom);
 
-			}else if (virtualController.isKeyDown(0, RWTVirtualController.BUTTON_C)) {
+			}
+		}
+		if(bcount<=4){
+			if (virtualController.isKeyDown(0, RWTVirtualController.BUTTON_C)) {
 				if(bfrag == false){
 					bom.setPosition(mazeSpritePlayer.getPosition().getX(),mazeSpritePlayer.getPosition().getY());
 					universe.place(bom);
-					bfrag = true;
 				}
+				bfrag = true;
 				mazeSpritePlayer.setVelocity(0.0, 0.0);
 				disableControl = true;
 			}
@@ -89,7 +93,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		}
 		mazeSpritePlayer.motion(interval, mazeGround);
 	}
-		
+
 	// public void progress(RWTVirtualController virtualController, long
 	// interval) {
 	// velocityFlg = mazeGround.checkVelocityZero(mazeSpritePlayer);

@@ -47,49 +47,32 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		// 速度が0.0にするフラグが立っていれば、速度を0にする
 		if (resetVelocity) {
 			disableControl = false;
-			if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
-				mazeSpritePlayer.setVelocity(-10.0, 0.0);
-				//disableControl = true;
-			}
-			// 右
-			else if (virtualController.isKeyDown(0, RWTVirtualController.RIGHT)) {
-				mazeSpritePlayer.setVelocity(10, 0.0);
-				disableControl = true;
-			}
-			// 上
-			else if (virtualController.isKeyDown(0, RWTVirtualController.UP)) {
-				mazeSpritePlayer.setVelocity(0.0, 10.0);
-				disableControl = true;
-			}
-			// 下
-			else if (virtualController.isKeyDown(0, RWTVirtualController.DOWN)) {
-				mazeSpritePlayer.setVelocity(0.0, -10.0);
-				disableControl = true;
-			}
+			mazeSpritePlayer.setVelocity(0.0, 0.0);
 		}
 		// キャラが移動していなければ、キー操作の処理を行える。
 		if(!disableControl){
 			// キー操作の処理
 			// 左
 			if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
-				mazeSpritePlayer.setVelocity(-10.0, 0.0);
+				mazeSpritePlayer.setVelocity(-5, 0.0);
 				disableControl = true;
 			}
 			// 右
 			else if (virtualController.isKeyDown(0, RWTVirtualController.RIGHT)) {
-				mazeSpritePlayer.setVelocity(10, 0.0);
+				mazeSpritePlayer.setVelocity(5, 0.0);
 				disableControl = true;
 			}
 			// 上
 			else if (virtualController.isKeyDown(0, RWTVirtualController.UP)) {
-				mazeSpritePlayer.setVelocity(0.0, 10.0);
+				mazeSpritePlayer.setVelocity(0.0, 5.0);
 				disableControl = true;
 			}
 			// 下
 			else if (virtualController.isKeyDown(0, RWTVirtualController.DOWN)) {
-				mazeSpritePlayer.setVelocity(0.0, -10.0);
+				mazeSpritePlayer.setVelocity(0.0, -5.0);
 				disableControl = true;
 			}
+
 		}
 		mazeSpritePlayer.motion(interval, mazeGround);
 	}
