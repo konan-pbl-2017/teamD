@@ -64,7 +64,7 @@ public class MazeStage extends Maze2D {
 				.getPosition().getY()).setScale(1, BigDecimal.ROUND_DOWN)
 				.doubleValue();
 
-		// ステージの構成オブジェクトの位置とプレイヤーの位置が同じかどうかっ判定する
+		// ステージの構成オブジェクトの位置とプレイヤーの位置が同じかどうか判定する
 		//1P
 		for (int i = 0; i < this.getStageObjectList().size(); i++) {
 			if (

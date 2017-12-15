@@ -16,7 +16,8 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	private MazeStage mazeGround;
 	
 	// 速度によって物体が動いている時にボタンを押せるかどうかを判定するフラグ
-	private boolean disableControl = false;
+	private boolean disableControl1 = false;
+	private boolean disableControl2 = false;
 
 		private long lastTime;
 		
@@ -60,7 +61,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		// 速度が0.0にするフラグが立っていれば、速度を0にする
 		if (resetVelocity) {
 			Player1.setVelocity(0.0, 0.0);
-			disableControl = false;
+			disableControl1 = false;
 		}
 		
 		//2P
@@ -77,32 +78,32 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		// 速度が0.0にするフラグが立っていれば、速度を0にする
 		if (resetVelocity) {
 			Player2.setVelocity(0.0, 0.0);
-			disableControl = false;
+			disableControl2 = false;
 		}
 		
 		// 1P
 		// キャラが移動していなければ、キー操作の処理を行える。
-		if(!disableControl){
+		if(!disableControl1){
 			// キー操作の処理
 			// 左 : a
 			if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
 				Player1.setVelocity(-speed, 0.0);
-				disableControl = true;
+				disableControl1 = true;
 			}
 			// 右 : d
 			else if (virtualController.isKeyDown(0, RWTVirtualController.RIGHT)) {
 				Player1.setVelocity(speed, 0.0);
-				disableControl = true;
+				disableControl1 = true;
 			}
 			// 上 : w
 			else if (virtualController.isKeyDown(0, RWTVirtualController.UP)) {
 				Player1.setVelocity(0.0, speed);
-				disableControl = true;
+				disableControl1 = true;
 			}
 			// 下 : s
 			else if (virtualController.isKeyDown(0, RWTVirtualController.DOWN)) {
 				Player1.setVelocity(0.0, -speed);
-				disableControl = true;
+				disableControl1 = true;
 			}
 		}
 		Player1.motion(interval, mazeGround);
@@ -111,22 +112,22 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		// 左 : k
 		if (virtualController.isKeyDown(1, RWTVirtualController.LEFT)) {
 			Player2.setVelocity(-speed, 0.0);
-			disableControl = true;
+			disableControl2 = true;
 		}
 		// 右 : ;
 		else if (virtualController.isKeyDown(1, RWTVirtualController.RIGHT)) {
 			Player2.setVelocity(speed, 0.0);
-			disableControl = true;
+			disableControl2 = true;
 		}
 		// 上 : o
 		else if (virtualController.isKeyDown(1, RWTVirtualController.UP)) {
 			Player2.setVelocity(0.0, speed);
-			disableControl = true;
+			disableControl2 = true;
 		}
 		// 下 : l
 		else if (virtualController.isKeyDown(1, RWTVirtualController.DOWN)) {
 			Player2.setVelocity(0.0, -speed);
-			disableControl = true;
+			disableControl2 = true;
 		}
 	Player2.motion(interval, mazeGround);
 	}
