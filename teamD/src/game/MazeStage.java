@@ -71,3 +71,4 @@ public class MazeStage extends Map2D {
 		return false;
 	}
 }
+

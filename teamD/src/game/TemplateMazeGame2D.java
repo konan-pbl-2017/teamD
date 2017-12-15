@@ -181,3 +181,4 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	}
 
 }
+
