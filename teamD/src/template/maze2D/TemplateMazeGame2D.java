@@ -10,10 +10,11 @@ import framework.model3D.Universe;
 public class TemplateMazeGame2D extends SimpleMazeGame {
 	private MazeSpritePlayer mazeSpritePlayer;
 	private MazeStage mazeGround;
+	private bomb bom;
 	
 	// 速度によって物体が動いている時にボタンを押せるかどうかを判定するフラグ
 	private boolean disableControl = false;
-
+    private boolean bfrag = false;
 	private long lastTime;
 	
 	@Override
@@ -23,6 +24,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		camera.addTarget(mazeGround);
 
 		mazeSpritePlayer = new MazeSpritePlayer("data\\RPG\\player.png");
+		bom = new bomb("data\\images\\MyShip.gif");
 		mazeSpritePlayer.setPosition(6.0, 2.0);
 		mazeSpritePlayer.setCollisionRadius(0.5);
 		universe.place(mazeSpritePlayer);
@@ -46,37 +48,48 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 
 		// 速度が0.0にするフラグが立っていれば、速度を0にする
 		if (resetVelocity) {
-			//mazeSpritePlayer.setVelocity(0.0, 0.0);
-			disableControl = true;
+			disableControl = false;
+			mazeSpritePlayer.setVelocity(0.0, 0.0);
 		}
 		// キャラが移動していなければ、キー操作の処理を行える。
 		if(!disableControl){
 			// キー操作の処理
 			// 左
 			if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
-				mazeSpritePlayer.moveLeft(5);
+				mazeSpritePlayer.setVelocity(-5, 0.0);
 				disableControl = true;
 			}
 			// 右
 			else if (virtualController.isKeyDown(0, RWTVirtualController.RIGHT)) {
-				mazeSpritePlayer.moveRight(5);
+				mazeSpritePlayer.setVelocity(5, 0.0);
 				disableControl = true;
-	
 			}
 			// 上
 			else if (virtualController.isKeyDown(0, RWTVirtualController.UP)) {
-				mazeSpritePlayer.moveUp(5);
+				mazeSpritePlayer.setVelocity(0.0, 5.0);
 				disableControl = true;
 			}
 			// 下
 			else if (virtualController.isKeyDown(0, RWTVirtualController.DOWN)) {
-				mazeSpritePlayer.moveDown(5);
+				mazeSpritePlayer.setVelocity(0.0, -5.0);
+				disableControl = true;
+				//bom.setPosition(mazeSpritePlayer.getPosition().getX(),mazeSpritePlayer.getPosition().getY());
+				//universe.place(bom);
+
+			}else if (virtualController.isKeyDown(0, RWTVirtualController.BUTTON_C)) {
+				if(bfrag == false){
+					bom.setPosition(mazeSpritePlayer.getPosition().getX(),mazeSpritePlayer.getPosition().getY());
+					universe.place(bom);
+					bfrag = true;
+				}
+				mazeSpritePlayer.setVelocity(0.0, 0.0);
 				disableControl = true;
 			}
+
 		}
 		mazeSpritePlayer.motion(interval, mazeGround);
 	}
-
+		
 	// public void progress(RWTVirtualController virtualController, long
 	// interval) {
 	// velocityFlg = mazeGround.checkVelocityZero(mazeSpritePlayer);
