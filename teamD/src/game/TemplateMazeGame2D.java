@@ -61,18 +61,18 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	
 	@Override
 	public void init(Universe universe) {
-		mazeGround = new MazeStage("data\\images\\block.gif", "data\\images\\Tile.gif");
+		mazeGround = new MazeStage();
 		universe.place(mazeGround);
 		camera.addTarget(mazeGround);
 
 		//1P
-		Player1 = new MazeSpritePlayer("data\\RPG\\player.png");
+		Player1 = new MazeSpritePlayer("data\\images\\santa3\\サンタ下.png");
 		Player1.setPosition(2.0, 2.0);
 		Player1.setCollisionRadius(0.5);
 		universe.place(Player1);
 		
 		//2P
-		Player2 = new MazeSpritePlayer("data\\RPG\\player.png");
+		Player2 = new MazeSpritePlayer("data\\images\\santa3\\サンタ下.png");
 		Player2.setPosition(18.0, 18.0);
 		Player2.setCollisionRadius(0.5);
 		universe.place(Player2);
