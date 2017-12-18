@@ -72,10 +72,10 @@ public class RWTVirtualController {
 		RWTVirtualController.keyBind(KeyEvent.VK_F, 0, RWTVirtualController.BUTTON_E);	// f
 		
 		// player2ópÇÃkeyBindÇÃèâä˙âª
-		//RWTVirtualController.keyBind(KeyEvent.VK_O, 1, RWTVirtualController.UP);	// o
-		//RWTVirtualController.keyBind(KeyEvent.VK_SEMICOLON, 1, RWTVirtualController.RIGHT);	//;
-		//RWTVirtualController.keyBind(KeyEvent.VK_K, 1, RWTVirtualController.LEFT);	// k
-		//RWTVirtualController.keyBind(KeyEvent.VK_L, 1, RWTVirtualController.DOWN);	// l
+		RWTVirtualController.keyBind(KeyEvent.VK_O, 1, RWTVirtualController.UP);	// o
+		RWTVirtualController.keyBind(KeyEvent.VK_SEMICOLON, 1, RWTVirtualController.RIGHT);	//;
+		RWTVirtualController.keyBind(KeyEvent.VK_K, 1, RWTVirtualController.LEFT);	// k
+		RWTVirtualController.keyBind(KeyEvent.VK_L, 1, RWTVirtualController.DOWN);	// l
 		RWTVirtualController.keyBind(KeyEvent.VK_BACK_SLASH, 1, RWTVirtualController.BUTTON_B);	// \
 		RWTVirtualController.keyBind(KeyEvent.VK_SHIFT, 1, RWTVirtualController.BUTTON_A);	// shift
 		RWTVirtualController.keyBind(KeyEvent.VK_CONTROL, 1, RWTVirtualController.BUTTON_C);	// ctrl
