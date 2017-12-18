@@ -19,16 +19,26 @@ public class EndingContainer extends RWTContainer {
 	@Override
 	public void build(GraphicsConfiguration gc) {
 		RWTLabel startLabel = new RWTLabel();
-		startLabel.setString("Finish");
-		startLabel.setRelativePosition(0.3f, 0.5f);
+		startLabel.setString("Thank you");
+		startLabel.setRelativePosition(0.22f, 0.3f);
+		RWTLabel startLabel2 = new RWTLabel();
+		startLabel2.setString("for playing!");
+		startLabel2.setRelativePosition(0.22f, 0.4f);
+		RWTLabel startLabel3 = new RWTLabel();
+		startLabel3.setString("Return Space");
+		startLabel3.setRelativePosition(0.15f, 0.7f);
 		Font f = new Font("", Font.PLAIN, 60);
 		startLabel.setFont(f);
 		addWidget(startLabel);
+		startLabel2.setFont(f);
+		addWidget(startLabel2);
+		startLabel3.setFont(f);
+		addWidget(startLabel3);
 	}
 
 	@Override
 	public void keyPressed(RWTVirtualKey key) {
-		if (key.getVirtualKey() == RWTVirtualController.BUTTON_A) {
+		if (key.getVirtualKey() == RWTVirtualController.BUTTON_C) {
 			game.restart();
 		}
 	}

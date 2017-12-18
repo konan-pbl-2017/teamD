@@ -1,6 +1,6 @@
 package game;
 
-import java.awt.Event;
+import java.applet.*;
 import java.awt.Font;
 import java.awt.GraphicsConfiguration;
 
@@ -19,12 +19,19 @@ public class StartContainer extends RWTContainer {
 	@Override
 	public void build(GraphicsConfiguration gc) {
 		RWTLabel startLabel = new RWTLabel();
-		startLabel.setString("Black Santa333");
-		startLabel.setRelativePosition(0.3f, 0.5f);
+		startLabel.setString("Black Santa");
+		startLabel.setRelativePosition(0.2f, 0.4f);
+		RWTLabel startLabel2 = new RWTLabel();
+		startLabel2.setString("Pless Space");
+		startLabel2.setRelativePosition(0.2f, 0.7f);
 		Font f = new Font("", Font.PLAIN, 60);
 		startLabel.setFont(f);
 		addWidget(startLabel);
+		startLabel2.setFont(f);
+		addWidget(startLabel2);
 	}
+	
+	
 
 	@Override
 	public void keyPressed(RWTVirtualKey key) {
