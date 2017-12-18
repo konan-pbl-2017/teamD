@@ -13,7 +13,7 @@ public class MazeStage extends Map2D {
 	// コンストラクタ
 	public MazeStage() {
 		super(new String[]{
-				"data\\images\\Tile.GIF",
+				"data\\images\\haikei_toumei.png",
 				"data\\images\\block.gif"},
 		1);
 	}
@@ -58,7 +58,7 @@ public class MazeStage extends Map2D {
 				.getPosition().getY()).setScale(1, BigDecimal.ROUND_DOWN)
 				.doubleValue();
 		
-		// ステージの構成オブジェクトの位置とプレイヤーの位置が同じかどうかっ判定する
+		// ステージの構成オブジェクトの位置とプレイヤーの位置が同じかどうか判定する
 		for (int i = 0; i < this.getStageObjectList().size(); i++) {
 			if (
 					mazeSpritePositionX == this.getStageObjectList().get(i).getPosition().getX()

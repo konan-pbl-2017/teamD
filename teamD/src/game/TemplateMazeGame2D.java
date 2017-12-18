@@ -22,7 +22,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		universe.place(mazeGround);
 		camera.addTarget(mazeGround);
 
-		mazeSpritePlayer = new MazeSpritePlayer("data\\RPG\\player.png");
+		mazeSpritePlayer = new MazeSpritePlayer("data\\images\\santa3\\サンタ下.png");
 		mazeSpritePlayer.setPosition(6.0, 2.0);
 		mazeSpritePlayer.setCollisionRadius(0.5);
 		universe.place(mazeSpritePlayer);
@@ -56,6 +56,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 			if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
 				mazeSpritePlayer.setVelocity(-2.0, 0.0);
 				disableControl = true;
+				//mazeSpritePlayer = new MazeSpritePlayer("data\\images\\santa3\\サンタ左.png");
 			}
 			// 右
 			else if (virtualController.isKeyDown(0, RWTVirtualController.RIGHT)) {
