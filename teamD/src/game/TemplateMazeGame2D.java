@@ -10,11 +10,16 @@ import framework.gameMain.SimpleMazeGame;
 import framework.model3D.Universe;
 
 public class TemplateMazeGame2D extends SimpleMazeGame {
-	private MazeSpritePlayer mazeSpritePlayer;
+	
+	double speed = 8.0;
+	
+	private MazeSpritePlayer Player1;
+	private MazeSpritePlayer Player2;
 	private MazeStage mazeGround;
 	
 	// 速度によって物体が動いている時にボタンを押せるかどうかを判定するフラグ
-	private boolean disableControl = false;
+	private boolean disableControl1 = false;
+	private boolean disableControl2 = false;
 	private IGameState startGameState = null;
 	private IGameState endingGameState = null;
 
