@@ -26,13 +26,14 @@ public class EndingContainer extends RWTContainer {
 		startLabel2.setRelativePosition(0.22f, 0.4f);
 		RWTLabel startLabel3 = new RWTLabel();
 		startLabel3.setString("Return Space");
-		startLabel3.setRelativePosition(0.15f, 0.7f);
+		startLabel3.setRelativePosition(0.23f, 0.7f);
 		Font f = new Font("", Font.PLAIN, 60);
+		Font f2 = new Font("", Font.PLAIN, 45);
 		startLabel.setFont(f);
 		addWidget(startLabel);
 		startLabel2.setFont(f);
 		addWidget(startLabel2);
-		startLabel3.setFont(f);
+		startLabel3.setFont(f2);
 		addWidget(startLabel3);
 	}
 
