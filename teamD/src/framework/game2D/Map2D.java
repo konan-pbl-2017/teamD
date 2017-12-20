@@ -527,37 +527,37 @@ public abstract class Map2D implements Placeable {
 				if (collisionVectorX.getX() > 0 && collisionVectorY.getY() > 0) {
 					collisionBackVel.set(0.0, -1.0 * collisionVectorY.length());
 					return collisionBackVel;
-				} 
+				} //Ç»Çµ
 				else if (collisionVectorX.getX() > 0 && collisionVectorY.getY() < 0) {
 					collisionBackVel.set(-1.0 * collisionVectorY.length(), 0.0);
 					return collisionBackVel;
-				} 
+				} //ñ≥Çµ
 				else if (collisionVectorX.getX() < 0 && collisionVectorY.getY() > 0) {
 					collisionBackVel.set(0.0, -1.0 * collisionVectorY.length());
 					return collisionBackVel;
-				} 
+				}// è„
 				else if (collisionVectorX.getX() < 0 && collisionVectorY.getY() < 0) {
 					collisionBackVel.set(-1.0 * collisionVectorY.length(), 0.0);
 					return collisionBackVel;
-				}
+				}//Ç»Çµ
 			} 
 			else if (collisionVectorX.length() < collisionVectorY.length()) {
 				if (collisionVectorX.getX() > 0 && collisionVectorY.getY() > 0) {
 					collisionBackVel.set(-1.0 * collisionVectorX.length(), 0.0);
 					return collisionBackVel;
-				}
+				}//ñ≥Çµ
 				else if (collisionVectorX.getX() > 0 && collisionVectorY.getY() < 0) {
 					collisionBackVel.set(-1.0 * collisionVectorX.length(), 0.0);
 					return collisionBackVel;
-				}
+				}//Ç»Ç¢
 				else if (collisionVectorX.getX() < 0 && collisionVectorY.getY() > 0) {
 					collisionBackVel.set(collisionVectorX.length(), 0.0);
 					return collisionBackVel;
-				}
+				}//ñ≥Çµ
 				else if (collisionVectorX.getX() < 0 && collisionVectorY.getY() < 0) {
 					collisionBackVel.set(1.0 * collisionVectorX.length(), 0.0);
 					return collisionBackVel;
-				}
+				}//ñ≥Çµ
 			}
 			collisionBackVel.set(-1.0	* collisionVectorX.getX(), 1.0	* objectVelocity.getY());
 			return collisionBackVel;
@@ -568,17 +568,17 @@ public abstract class Map2D implements Placeable {
 				if (collisionVectorX.getX() > 0 && collisionVectorY.getY() < 0) {
 					collisionBackVel.set(0.0, 1.0 * collisionVectorY.length());
 					return collisionBackVel;
-				} 
+				} //ñ≥Çµ
 				else if (collisionVectorX.getX() < 0 && collisionVectorY.getY() < 0) {
 					collisionBackVel.set(0.0, 1.0 * collisionVectorY.length());
 					return collisionBackVel;
-				}
+				}//ñ≥Çµ
 			} 
 			else if (collisionVectorX.length() < collisionVectorY.length()) {
 				if (collisionVectorX.getX() > 0 && collisionVectorY.getY() > 0) {
 					collisionBackVel.set(-1.0 * collisionVectorX.length(), 0.0);
 					return collisionBackVel;
-				} 
+				} //ñ≥Çµ
 				else if (collisionVectorX.getX() > 0 && collisionVectorY.getY() < 0) {
 					collisionBackVel.set(-1.0 * collisionVectorX.length(), 0.0);
 					return collisionBackVel;
@@ -587,10 +587,10 @@ public abstract class Map2D implements Placeable {
 					collisionBackVel.set(1.0 * collisionVectorX.length(), 0.0);
 					return collisionBackVel;
 				}
-				else if (collisionVectorX.getX() < 0 && collisionVectorY.getY() < 0) {
+				/*else if (collisionVectorX.getX() < 0 && collisionVectorY.getY() < 0) {
 					collisionBackVel.set(1.0 * collisionVectorX.length(), 0.0);
 					return collisionBackVel;
-				}
+				}*/
 			}
 			collisionBackVel.set(-1.0 * objectVelocity.getX(), -1.0	* collisionVectorY.length());
 			return collisionBackVel;

@@ -1,10 +1,14 @@
 package game;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+
+import template.shooting2D.MyShipBullet;
 
 import framework.RWT.RWTContainer;
 import framework.RWT.RWTFrame3D;
 import framework.RWT.RWTVirtualController;
+import framework.game2D.Velocity2D;
 import framework.gameMain.IGameState;
 import framework.gameMain.SimpleMazeGame;
 import framework.model3D.Universe;
@@ -12,9 +16,18 @@ import framework.model3D.Universe;
 public class TemplateMazeGame2D extends SimpleMazeGame {
 	private MazeSpritePlayer mazeSpritePlayer;
 	private MazeStage mazeGround;
+	private ArrayList<MyShipBullet> myShipBulletList = new ArrayList<MyShipBullet>();
+	private bome bome;
+	private bomb bom;
+	private long putt = 0;
+	private long expt = 0;
+	int bcount = 0;
 	
 	// 速度によって物体が動いている時にボタンを押せるかどうかを判定するフラグ
 	private boolean disableControl = false;
+	private boolean bfrag = false;
+	private boolean expflag = false;
+	boolean displace = false;
 	private IGameState startGameState = null;
 	private IGameState endingGameState = null;
 
@@ -61,6 +74,8 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		camera.addTarget(mazeGround);
 
 		mazeSpritePlayer = new MazeSpritePlayer("data\\RPG\\player.png");
+		bom = new bomb("data\\images\\MyShip.gif");
+        bome = new bome("data\\images\\Enemy.gif");
 		mazeSpritePlayer.setPosition(6.0, 2.0);
 		mazeSpritePlayer.setCollisionRadius(0.5);
 		universe.place(mazeSpritePlayer);
@@ -71,7 +86,6 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	public void progress(RWTVirtualController virtualController, long interval) {
 		// 迷路ゲームステージを構成するオブジェクトの位置とプレイヤーの位置をもとに速度を0にするかどうかを調べる。
 		boolean resetVelocity = mazeGround.checkGridPoint(mazeSpritePlayer);
-
 		// 誤差による位置修正を行うため、プレイヤーのx成分とy成分が0.0の時、位置の値を切り上げる
 		if (mazeSpritePlayer.getVelocity().getX() == 0.0
 				&& mazeSpritePlayer.getVelocity().getY() == 0.0) {
@@ -112,10 +126,40 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 				mazeSpritePlayer.setVelocity(0.0, -2.0);
 				disableControl = true;
 			}
+			if (virtualController.isKeyDown(0, RWTVirtualController.BUTTON_C)) {
+				if(bfrag == false){
+					bom.setPosition(mazeSpritePlayer.getPosition().getX(),mazeSpritePlayer.getPosition().getY());
+					universe.place(bom);
+				}
+				bfrag = true;
+				disableControl = true;
+				expflag = false;
+			}
+			if (System.currentTimeMillis() - putt > 4000&&bfrag == true) {
+				universe.displace(bom);
+				putt = System.currentTimeMillis();
+				expflag = true;			
+				bfrag = false;
+			}
+			
+			if(expflag == true&&System.currentTimeMillis() - expt == 6000){
+				//System.out.println("ばーーーーーーーん");
+				bome.setPosition(bom.getPosition().getX(),bom.getPosition().getY());
+				universe.place(bome);
+				expflag = false;
+				expt = System.currentTimeMillis();
+				displace = true;
+			}
+			if(System.currentTimeMillis() - expt >= 5000&&displace ==true){
+				universe.place(bome);
+				expflag = false;
+				bfrag = false;
+				disableControl = true;
+				expt = System.currentTimeMillis();
+			}
 		}
 		mazeSpritePlayer.motion(interval, mazeGround);
 	}
-
 	// public void progress(RWTVirtualController virtualController, long
 	// interval) {
 	// velocityFlg = mazeGround.checkVelocityZero(mazeSpritePlayer);
