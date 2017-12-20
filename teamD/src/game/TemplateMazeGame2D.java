@@ -136,6 +136,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 				disableControl = true;
 				expflag = false;
 			}
+			
 			if (System.currentTimeMillis() - putt > 4000&&bfrag == true) {
 				universe.displace(bom);
 				expflag = true;			
