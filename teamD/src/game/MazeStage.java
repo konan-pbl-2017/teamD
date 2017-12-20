@@ -12,7 +12,7 @@ public class MazeStage extends Map2D {
 	// コンストラクタ
 	public MazeStage() {
 		super(new String[]{
-				"data\\images\\haikei_toumei.png",
+				"data\\images\\haikei\\haikei_kuro.jpg",
 				"data\\images\\block.gif"},
 		1);
 	}
