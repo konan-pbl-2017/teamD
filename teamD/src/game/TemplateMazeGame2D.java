@@ -16,13 +16,18 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	private MazeSpritePlayer Player1;
 	private MazeSpritePlayer Player2;
 	private MazeStage mazeGround;
-	
+	private bombe bome;
+	private bomb bom;
 	// 速度によって物体が動いている時にボタンを押せるかどうかを判定するフラグ
 	private boolean disableControl1 = false;
 	private boolean disableControl2 = false;
+	private boolean bfrag = false;
+	private boolean expflag = false;
+	private boolean displace = false;
 	private IGameState startGameState = null;
 	private IGameState endingGameState = null;
-
+	private long putt = 0;
+	private long expt = 0;
 	private long lastTime;
 	
 	public TemplateMazeGame2D() {
@@ -76,6 +81,10 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		Player2.setPosition(18.0, 18.0);
 		Player2.setCollisionRadius(0.5);
 		universe.place(Player2);
+		
+		//爆弾
+		bom = new bomb("data\\images\\MyShip.gif");
+        bome = new bombe("data\\images\\Enemy.gif");
 	}
 
 	@Override
@@ -142,9 +151,37 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 						Player1.setVelocity(0.0, -speed);
 						disableControl1 = true;
 					}
-				}
-				Player1.motion(interval, mazeGround);
+					if (virtualController.isKeyDown(0, RWTVirtualController.BUTTON_C)) {
+						if(bfrag == false){
+							bom.setPosition(Player1.getPosition().getX(),Player1.getPosition().getY());
+							universe.place(bom);
+							putt = System.currentTimeMillis();
+						}
+						bfrag = true;
+						disableControl1 = true;
+						expflag = false;
+					}
+					
+					if (System.currentTimeMillis() - putt > 4000&&bfrag == true) {
+						universe.displace(bom);			
+						bfrag = false;
+						bome.setPosition(bom.getPosition().getX(),bom.getPosition().getY());
+						universe.place(bome);
+						expt = System.currentTimeMillis();
+						displace = true;
+					}
+					
 				
+					if(System.currentTimeMillis() - expt >= 1000&&displace ==true){
+						universe.displace(bome);
+						bfrag = false;
+						disableControl1 = true;
+						expt = System.currentTimeMillis();
+					}
+				
+				
+				Player1.motion(interval, mazeGround);
+				}
 				//2P
 				// 左 : k
 				if (virtualController.isKeyDown(1, RWTVirtualController.LEFT)) {
