@@ -177,6 +177,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 						bfrag = false;
 						disableControl1 = true;
 						expt = System.currentTimeMillis();
+						displace = false;
 					}
 				
 				
