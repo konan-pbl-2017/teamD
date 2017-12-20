@@ -130,6 +130,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 				if(bfrag == false){
 					bom.setPosition(mazeSpritePlayer.getPosition().getX(),mazeSpritePlayer.getPosition().getY());
 					universe.place(bom);
+					putt = System.currentTimeMillis();
 				}
 				bfrag = true;
 				disableControl = true;
@@ -137,21 +138,18 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 			}
 			if (System.currentTimeMillis() - putt > 4000&&bfrag == true) {
 				universe.displace(bom);
-				putt = System.currentTimeMillis();
 				expflag = true;			
 				bfrag = false;
-			}
-			
-			if(expflag == true&&System.currentTimeMillis() - expt == 6000){
-				//System.out.println("ばーーーーーーーん");
 				bome.setPosition(bom.getPosition().getX(),bom.getPosition().getY());
 				universe.place(bome);
 				expflag = false;
 				expt = System.currentTimeMillis();
 				displace = true;
 			}
-			if(System.currentTimeMillis() - expt >= 5000&&displace ==true){
-				universe.place(bome);
+			
+		
+			if(System.currentTimeMillis() - expt >= 1000&&displace ==true){
+				universe.displace(bome);
 				expflag = false;
 				bfrag = false;
 				disableControl = true;
