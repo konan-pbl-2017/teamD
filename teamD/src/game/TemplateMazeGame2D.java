@@ -11,7 +11,7 @@ import framework.model3D.Universe;
 
 public class TemplateMazeGame2D extends SimpleMazeGame {
 	
-	double speed = 8.0;
+	double speed = 5.0;
 	
 	private MazeSpritePlayer Player1;
 	private MazeSpritePlayer Player2;
@@ -83,8 +83,8 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		universe.place(Player2);
 		
 		//”š’e
-		bom = new bomb("data\\images\\MyShip.gif");
-        bome = new bombe("data\\images\\Enemy.gif");
+		bom = new bomb("data\\images\\bakudan\\”š’e.png");
+        bome = new bombe("data\\images\\bakudan\\”š”­.png");
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 						Player1.setVelocity(0.0, -speed);
 						disableControl1 = true;
 					}
-					if (virtualController.isKeyDown(0, RWTVirtualController.BUTTON_C)) {
+					if (virtualController.isKeyDown(0, RWTVirtualController.BUTTON_B)) {
 						if(bfrag == false){
 							bom.setPosition(Player1.getPosition().getX(),Player1.getPosition().getY());
 							universe.place(bom);
@@ -179,7 +179,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 						expt = System.currentTimeMillis();
 						displace = false;
 					}
-				
+					//ƒ{ƒ€‚ðv‚Å’u‚¢‚Ä”š”j
 				
 				Player1.motion(interval, mazeGround);
 				}
@@ -204,6 +204,36 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 					Player2.setVelocity(0.0, -speed);
 					disableControl2 = true;
 				}
+				if (virtualController.isKeyDown(1, RWTVirtualController.BUTTON_A)) {
+					if(bfrag == false){
+						bom.setPosition(Player2.getPosition().getX(),Player2.getPosition().getY());
+						universe.place(bom);
+						putt = System.currentTimeMillis();
+					}
+					bfrag = true;
+					disableControl1 = true;
+					expflag = false;
+				}
+				
+				if (System.currentTimeMillis() - putt > 4000&&bfrag == true) {
+					universe.displace(bom);			
+					bfrag = false;
+					bome.setPosition(bom.getPosition().getX(),bom.getPosition().getY());
+					universe.place(bome);
+					expt = System.currentTimeMillis();
+					displace = true;
+				}
+				
+			
+				if(System.currentTimeMillis() - expt >= 1000&&displace ==true){
+					universe.displace(bome);
+					bfrag = false;
+					disableControl1 = true;
+					expt = System.currentTimeMillis();
+					displace = false;
+				}
+				//ƒ{ƒ€‚ðshift‚Å’u‚¢‚Ä”š”j
+				
 			Player2.motion(interval, mazeGround);
 			}
 
