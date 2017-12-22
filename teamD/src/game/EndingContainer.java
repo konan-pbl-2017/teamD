@@ -20,10 +20,10 @@ public class EndingContainer extends RWTContainer {
 	public void build(GraphicsConfiguration gc) {
 		RWTLabel startLabel = new RWTLabel();
 		startLabel.setString("Thank you");
-		startLabel.setRelativePosition(0.22f, 0.3f);
+		startLabel.setRelativePosition(0.12f, 0.3f);
 		RWTLabel startLabel2 = new RWTLabel();
 		startLabel2.setString("for playing!");
-		startLabel2.setRelativePosition(0.22f, 0.4f);
+		startLabel2.setRelativePosition(0.32f, 0.4f);
 		RWTLabel startLabel3 = new RWTLabel();
 		startLabel3.setString("Return Space");
 		startLabel3.setRelativePosition(0.23f, 0.7f);
