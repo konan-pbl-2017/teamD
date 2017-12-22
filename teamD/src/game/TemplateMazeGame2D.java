@@ -5,20 +5,24 @@ import java.math.BigDecimal;
 import framework.RWT.RWTContainer;
 import framework.RWT.RWTFrame3D;
 import framework.RWT.RWTVirtualController;
+import framework.game2D.Position2D;
+import framework.game2D.Sprite;
 import framework.gameMain.IGameState;
 import framework.gameMain.SimpleMazeGame;
 import framework.model3D.Universe;
 
 public class TemplateMazeGame2D extends SimpleMazeGame {
-	
+
 	double speed = 5.0;
-	
+
 	private MazeSpritePlayer Player1;
+	private MazeSpritePlayer P1down; 
 	private MazeSpritePlayer Player2;
+	private MazeSpritePlayer P2down;
 	private MazeStage mazeGround;
-	private bombe bome;
+	private bombe bome[] = new bombe[5];
 	private bomb bom;
-	private bombe bome2;
+	private bombe bome2[] = new bombe[5];
 	private bomb bom2;
 	// 速度によって物体が動いている時にボタンを押せるかどうかを判定するフラグ
 	private boolean disableControl1 = false;
@@ -28,14 +32,20 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	private boolean expflag = false;
 	private boolean displace = false;
 	private boolean displace2 = false;
+	private boolean down = false;
+	private boolean down2 = false;
+    private boolean end = false;
 	private IGameState startGameState = null;
 	private IGameState endingGameState = null;
 	private long putt = 0;
 	private long expt = 0;
+	private long downt = 0;
+	private long downt2 = 0; 
 	private long lastTime;
-	int up = 0, down = 1, left = 2, right = 3;
+	int i = 0;
+	int up = 0, down1 = 1, left = 2, right = 3;
 	int muki = 0;
-	
+
 	public TemplateMazeGame2D() {
 		startGameState = new IGameState() {
 			@Override
@@ -69,7 +79,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		};
 		setCurrentGameState(startGameState);
 	}
-	
+
 	@Override
 	public void init(Universe universe) {
 		mazeGround = new MazeStage();
@@ -81,189 +91,291 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		Player1.setPosition(2.0, 2.0);
 		Player1.setCollisionRadius(0.5);
 		universe.place(Player1);
-		
+
+		P1down = new MazeSpritePlayer("data\\images\\santa3\\サンタ倒れ.png");
+		P2down = new MazeSpritePlayer("data\\images\\player2\\コス倒れ.png");
 		//2P
 		Player2 = new MazeSpritePlayer("data\\images\\player2\\コス下.png");
-		Player2.setPosition(22.0, 18.0);
+		Player2.setPosition(18.0, 18.0);
 		Player2.setCollisionRadius(0.5);
 		universe.place(Player2);
-		
+
 		//爆弾
 		bom = new bomb("data\\images\\bakudan\\爆弾.png");
-        bome = new bombe("data\\images\\bakudan\\爆発.png");
-        bom2 = new bomb("data\\images\\bakudan\\爆弾.png");
-        bome2 = new bombe("data\\images\\bakudan\\爆発.png");
-        
+		for(i = 0;i<5;i++){
+			if(i==0){
+				bome[i] = new bombe("data\\images\\bakudan\\爆発.png"); 
+			}else if(i ==1 ){
+				bome[i] = new bombe("data\\images\\bakudan\\炎下.png"); 
+			}else if(i ==2 ){
+				bome[i] = new bombe("data\\images\\bakudan\\炎左.png"); 
+			}else if(i ==3 ){
+				bome[i] = new bombe("data\\images\\bakudan\\炎上.png");
+			}else if(i ==4 ){
+				bome[i] = new bombe("data\\images\\bakudan\\炎右.png"); 
+			}
+		}
+		bom2 = new bomb("data\\images\\bakudan\\爆弾.png");
+		for(i = 0;i<5;i++){
+			if(i==0){
+				bome2[i] = new bombe("data\\images\\bakudan\\爆発.png"); 
+			}else if(i ==1 ){
+				bome2[i] = new bombe("data\\images\\bakudan\\炎下.png"); 
+			}else if(i ==2 ){
+				bome2[i] = new bombe("data\\images\\bakudan\\炎左.png"); 
+			}else if(i ==3 ){
+				bome2[i] = new bombe("data\\images\\bakudan\\炎上.png");
+			}else if(i ==4 ){
+				bome2[i] = new bombe("data\\images\\bakudan\\炎右.png"); 
+			}
+		}
 	}
 
 	@Override
 	public void progress(RWTVirtualController virtualController, long interval) {
-		// 迷路ゲームステージを構成するオブジェクトの位置とプレイヤーの位置をもとに速度を0にするかどうかを調べる。
-		boolean resetVelocity = mazeGround.checkGridPoint(Player1, Player2);
+		Position2D gridPoint1 = mazeGround.getNeighborGridPoint(Player1);
 
-		// 誤差による位置修正を行うため、プレイヤーのx成分とy成分が0.0の時、位置の値を切り上げる
-		//1P
-		if (Player1.getVelocity().getX() == 0.0
-				&& Player1.getVelocity().getY() == 0.0) {
-			Player1.setPosition(new BigDecimal(Player1
-					.getPosition().getX())
-			.setScale(0, BigDecimal.ROUND_HALF_UP).doubleValue(),
-			new BigDecimal(Player1.getPosition().getY())
-			.setScale(0, BigDecimal.ROUND_HALF_UP)
-			.doubleValue());
-		}
-
-		// 速度が0.0にするフラグが立っていれば、速度を0にする
-		if (resetVelocity) {
-			Player1.setPosition(Player1.getPosition().getX(),Player1.getPosition().getY());
+		// 速度が0にするフラグが立っていれば、速度を0にする
+		if (gridPoint1 != null) {
+			Player1.setPosition(gridPoint1);
 			Player1.setVelocity(0.0, 0.0);
 			disableControl1 = false;
+System.out.println("player1 grid");
 		}
 		
-		//2P
-		if (Player2.getVelocity().getX() == 0.0
-				&& Player2.getVelocity().getY() == 0.0) {
-			Player2.setPosition(new BigDecimal(Player2
-					.getPosition().getX())
-			.setScale(0, BigDecimal.ROUND_HALF_UP).doubleValue(),
-			new BigDecimal(Player2.getPosition().getY())
-			.setScale(0, BigDecimal.ROUND_HALF_UP)
-			.doubleValue());
-		}
+		Position2D gridPoint2 = mazeGround.getNeighborGridPoint(Player2);
 
-		// 速度が0.0にするフラグが立っていれば、速度を0にする
-		if (resetVelocity) {
-			Player2.setPosition(Player2.getPosition().getX(),Player2.getPosition().getY());
+		// 速度が0にするフラグが立っていれば、速度を0にする
+		if (gridPoint2 != null) {
+			Player2.setPosition(gridPoint2);
 			Player2.setVelocity(0.0, 0.0);
 			disableControl2 = false;
+System.out.println("player2 grid");
 		}
+		
 		// キャラが移動していなければ、キー操作の処理を行える。
 		// 1P
-				// キャラが移動していなければ、キー操作の処理を行える。
-				if(!disableControl1){
-					// キー操作の処理
-					// 左 : a
-					if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
-						Player1.setVelocity(-speed, 0.0);
-						Player1.setImage("data\\images\\santa3\\サンタ左.png");
-						muki =left;
-						disableControl1 = true;
-					}
-					// 右 : d
-					else if (virtualController.isKeyDown(0, RWTVirtualController.RIGHT)) {
-						Player1.setVelocity(speed, 0.0);
-						Player1.setImage("data\\images\\santa3\\サンタ右.png");
-						muki =right;
-						disableControl1 = true;
-					}
-					// 上 : w
-					else if (virtualController.isKeyDown(0, RWTVirtualController.UP)) {
-						Player1.setVelocity(0.0, speed);
-						Player1.setImage("data\\images\\santa3\\サンタ上.png");
-						muki =up;
-						disableControl1 = true;
-					}
-					// 下 : s
-					else if (virtualController.isKeyDown(0, RWTVirtualController.DOWN)) {
-						Player1.setVelocity(0.0, -speed);
-						Player1.setImage("data\\images\\santa3\\サンタ下.png");
-						muki =down;
-						disableControl1 = true;
-					}
-					if (virtualController.isKeyDown(0, RWTVirtualController.BUTTON_B)) {
-						if(bfrag == false){
-							bom.setPosition(Player1.getPosition().getX(),Player1.getPosition().getY());
-							universe.place(bom);
-							putt = System.currentTimeMillis();
-						}
-						bfrag = true;
-						disableControl1 = true;
-						expflag = false;
-					}
-					
-					if (System.currentTimeMillis() - putt > 4000&&bfrag == true) {
-						universe.displace(bom);			
-						bfrag = false;
-						bome.setPosition(bom.getPosition().getX(),bom.getPosition().getY());
-						universe.place(bome);
-						expt = System.currentTimeMillis();
-						displace = true;
-					}
-					
-				
-					if(System.currentTimeMillis() - expt >= 1000&&displace ==true){
-						universe.displace(bome);
-						bfrag = false;
-						disableControl1 = true;
-						expt = System.currentTimeMillis();
-						displace = false;
-					}
-					//ボムをvで置いて爆破
-					
-				Player1.motion(interval, mazeGround);
+		// キャラが移動していなければ、キー操作の処理を行える。
+		if(!disableControl1){
+			// キー操作の処理
+			// 左 : a
+			if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
+				Player1.setVelocity(-speed, 0.0);
+				Player1.setImage("data\\images\\santa3\\サンタ左.png");
+				muki = left;
+				disableControl1 = true;
+System.out.println("player1 左");
+			}
+			// 右 : d
+			else if (virtualController.isKeyDown(0, RWTVirtualController.RIGHT)) {
+				Player1.setVelocity(speed, 0.0);
+				Player1.setImage("data\\images\\santa3\\サンタ右.png");
+				muki = right;
+				disableControl1 = true;
+System.out.println("player1 右");
+			}
+			// 上 : w
+			else if (virtualController.isKeyDown(0, RWTVirtualController.UP)) {
+				Player1.setVelocity(0.0, speed);
+				Player1.setImage("data\\images\\santa3\\サンタ上.png");
+				muki = up;
+				disableControl1 = true;
+System.out.println("player1 上");
+			}
+			// 下 : s
+			else if (virtualController.isKeyDown(0, RWTVirtualController.DOWN)) {
+				Player1.setVelocity(0.0, -speed);
+				Player1.setImage("data\\images\\santa3\\サンタ下.png");
+				muki = down1;
+				disableControl1 = true;
+System.out.println("player1 下");
+			}
+			if (virtualController.isKeyDown(0, RWTVirtualController.BUTTON_B)) {
+				if(bfrag == false){
+					bom.setPosition(Player1.getPosition().getX(),Player1.getPosition().getY());
+					universe.place(bom);
+					putt = System.currentTimeMillis();
 				}
-				//2P
-				// 左 : k
-				if (virtualController.isKeyDown(1, RWTVirtualController.LEFT)) {
-					Player2.setVelocity(-speed, 0.0);
-					Player2.setImage("data\\images\\player2\\コス左.png");
-					muki = left;
-					disableControl2 = true;
+				bfrag = true;
+				disableControl1 = true;
+				expflag = false;
+System.out.println("player1 爆弾");
+			}
+		}
+
+		if (System.currentTimeMillis() - putt > 4000&&bfrag == true) {
+			universe.displace(bom);			
+			bfrag = false;
+			for(i=0;i<5;i++){
+				if(i == 0){
+					bome[i].setPosition(bom.getPosition().getX(),bom.getPosition().getY());
+					universe.place(bome[i]);
+				}else if(i == 1){
+					bome[i].setPosition(bom.getPosition().getX(),bom.getPosition().getY()-2);
+					universe.place(bome[i]);
+				}else if(i == 2){
+					bome[i].setPosition(bom.getPosition().getX()-2,bom.getPosition().getY());
+					universe.place(bome[i]);
+				}else if(i == 3){
+					bome[i].setPosition(bom.getPosition().getX(),bom.getPosition().getY()+2);
+					universe.place(bome[i]);
+				}else if(i == 4){
+					bome[i].setPosition(bom.getPosition().getX()+2,bom.getPosition().getY());
+					universe.place(bome[i]);
 				}
-				// 右 : ;
-				else if (virtualController.isKeyDown(1, RWTVirtualController.RIGHT)) {
-					Player2.setVelocity(speed, 0.0);
-					Player2.setImage("data\\images\\player2\\コス右.png");
-					muki = right;
-					disableControl2 = true;
+				if(Player2.getPosition().getX()-bome[i].getPosition().getX()<2&&-2<Player2.getPosition().getX()-bome[i].getPosition().getX()&&Player2.getPosition().getY()-bome[i].getPosition().getY()<2&&-2<Player2.getPosition().getY()-bome[i].getPosition().getY()){
+					universe.displace(Player2);
+					P2down.setPosition(Player2.getPosition().getX(),Player2.getPosition().getY());
+					universe.place(P2down);
+					downt2 = System.currentTimeMillis();
+					down2 =true;
+				}else if(Player1.getPosition().getX()-bome[i].getPosition().getX()<2&&-2<Player1.getPosition().getX()-bome[i].getPosition().getX()&&Player1.getPosition().getY()-bome[i].getPosition().getY()<2&&-2<Player1.getPosition().getY()-bome[i].getPosition().getY()){
+					universe.displace(Player1);
+					P1down.setPosition(Player1.getPosition().getX(),Player1.getPosition().getY());
+					universe.place(P1down);
+					downt = System.currentTimeMillis();
+					down =true;
 				}
-				// 上 : o
-				else if (virtualController.isKeyDown(1, RWTVirtualController.UP)) {
-					Player2.setVelocity(0.0, speed);
-					Player2.setImage("data\\images\\player2\\コス上.png");
-					muki = up;
-					disableControl2 = true;
-				}
-				// 下 : l
-				else if (virtualController.isKeyDown(1, RWTVirtualController.DOWN)) {
-					Player2.setVelocity(0.0, -speed);
-					Player2.setImage("data\\images\\player2\\コス下.png");
-					muki = down;
-					disableControl2 = true;
-				}
-				if (virtualController.isKeyDown(1, RWTVirtualController.BUTTON_A)) {
-					if(bfrag2 == false){
-						bom2.setPosition(Player2.getPosition().getX(),Player2.getPosition().getY());
-						universe.place(bom2);
-						putt = System.currentTimeMillis();
-					}
-					bfrag2 = true;
-					disableControl1 = true;
-					expflag = false;
-				}
-				
-				if (System.currentTimeMillis() - putt > 4000&&bfrag2 == true) {
-					universe.displace(bom2);			
-					bfrag2 = false;
-					bome2.setPosition(bom2.getPosition().getX(),bom2.getPosition().getY());
-					universe.place(bome2);
-					expt = System.currentTimeMillis();
-					displace2 = true;
-				}
-				
-			
-				if(System.currentTimeMillis() - expt >= 1000&&displace2 ==true){
-					universe.displace(bome2);
-					bfrag2 = false;
-					disableControl1 = true;
-					expt = System.currentTimeMillis();
-					displace2 = false;
-				}
-				//ボムをshiftで置いて爆破
-				
-			Player2.motion(interval, mazeGround);
 			}
 
+
+			expt = System.currentTimeMillis();
+			displace = true;
+		}
+
+
+		if(System.currentTimeMillis() - expt >= 1000&&displace ==true){
+			for(i=0;i<5;i++){
+				universe.displace(bome[i]);
+			}
+			
+			bfrag = false;
+			disableControl1 = true;
+			expt = System.currentTimeMillis();
+			displace = false;
+		}
+		//ボムをvで置いて爆破
+
+		Player1.motion(interval, mazeGround);
+System.out.println("player1 移動");
+			
+		// キャラが移動していなければ、キー操作の処理を行える。
+		if(!disableControl2){
+			//2P
+			// 左 : k
+			if (virtualController.isKeyDown(1, RWTVirtualController.LEFT)) {
+				Player2.setVelocity(-speed, 0.0);
+				Player2.setImage("data\\images\\player2\\コス左.png");
+				muki = left;
+				disableControl2 = true;
+System.out.println("player2 左");
+			}
+			// 右 : ;
+			else if (virtualController.isKeyDown(1, RWTVirtualController.RIGHT)) {
+				Player2.setVelocity(speed, 0.0);
+				Player2.setImage("data\\images\\player2\\コス右.png");
+				muki = right;
+				disableControl2 = true;
+System.out.println("player2 右");
+			}
+			// 上 : o
+			else if (virtualController.isKeyDown(1, RWTVirtualController.UP)) {
+				Player2.setVelocity(0.0, speed);
+				Player2.setImage("data\\images\\player2\\コス上.png");
+				muki = up;
+				disableControl2 = true;
+System.out.println("player2 上");
+			}
+			// 下 : l
+			else if (virtualController.isKeyDown(1, RWTVirtualController.DOWN)) {
+				Player2.setVelocity(0.0, -speed);
+				Player2.setImage("data\\images\\player2\\コス下.png");
+				muki = down1;
+				disableControl2 = true;
+System.out.println("player2 下");
+			}
+			if (virtualController.isKeyDown(1, RWTVirtualController.BUTTON_A)) {
+				if(bfrag2 == false){
+					bom2.setPosition(Player2.getPosition().getX(),Player2.getPosition().getY());
+					universe.place(bom2);
+					putt = System.currentTimeMillis();
+				}
+				bfrag2 = true;
+				disableControl2 = true;
+				expflag = false;
+System.out.println("player2 爆弾");
+			}
+		}
+
+		if (System.currentTimeMillis() - putt > 4000&&bfrag2 == true) {
+			universe.displace(bom2);			
+			bfrag2 = false;
+			for(i=0;i<5;i++){
+
+				if(i == 0){
+					bome2[i].setPosition(bom2.getPosition().getX(),bom2.getPosition().getY());
+					universe.place(bome2[i]);
+				}else if(i == 1){
+					bome2[i].setPosition(bom2.getPosition().getX(),bom2.getPosition().getY()-2);
+					universe.place(bome2[i]);
+				}else if(i == 2){
+					bome2[i].setPosition(bom2.getPosition().getX()-2,bom2.getPosition().getY());
+					universe.place(bome2[i]);
+				}else if(i == 3){
+					bome2[i].setPosition(bom2.getPosition().getX(),bom2.getPosition().getY()+2);
+					universe.place(bome2[i]);
+				}else if(i == 4){
+					bome2[i].setPosition(bom2.getPosition().getX()+2,bom2.getPosition().getY());
+					universe.place(bome2[i]);
+				}
+				if(Player1.getPosition().getX()-bome2[i].getPosition().getX()<2&&-2<Player1.getPosition().getX()-bome2[i].getPosition().getX()&&Player1.getPosition().getY()-bome2[i].getPosition().getY()<1&&-1<Player1.getPosition().getY()-bome2[i].getPosition().getY()){
+					universe.displace(Player1);
+					P1down.setPosition(Player1.getPosition().getX(),Player1.getPosition().getY());
+					universe.place(P1down);
+					down = true;
+					downt = System.currentTimeMillis();
+				}else if(Player2.getPosition().getX()-bome2[i].getPosition().getX()<2&&-2<Player2.getPosition().getX()-bome2[i].getPosition().getX()&&Player2.getPosition().getY()-bome2[i].getPosition().getY()<2&&-2<Player2.getPosition().getY()-bome2[i].getPosition().getY()){
+					universe.displace(Player2);
+					P2down.setPosition(Player2.getPosition().getX(),Player2.getPosition().getY());
+					universe.place(P2down);
+					down2 = true;
+					downt2 = System.currentTimeMillis();
+					
+				}
+			}
+
+			expt = System.currentTimeMillis();
+			displace2 = true;
+		}
+
+
+		if(down == true&&System.currentTimeMillis() - downt >= 3000){
+			universe.displace(P1down);
+			end = true;
+		}
+		if(down2 == true&&System.currentTimeMillis() - downt2 >= 3000){
+			universe.displace(P2down);
+			end = true;
+		}
+		
+		if(end == true&&(System.currentTimeMillis() - downt2 >= 5000||System.currentTimeMillis() - downt >= 5000)){
+			ending();
+		}
+
+		if(System.currentTimeMillis() - expt >= 1000&&displace2 ==true){
+			for(i=0;i<5;i++){
+				universe.displace(bome2[i]);
+			}
+			bfrag = false;
+			disableControl2 = true;
+			expt = System.currentTimeMillis();
+			displace2 = false;
+		}
+		//ボムをvで置いて爆破
+
+	System.out.println("player2 移動");
+		Player2.motion(interval, mazeGround);
+	}
 	// public void progress(RWTVirtualController virtualController, long
 	// interval) {
 	// velocityFlg = mazeGround.checkVelocityZero(mazeSpritePlayer);
