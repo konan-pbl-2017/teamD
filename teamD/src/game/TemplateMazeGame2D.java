@@ -96,7 +96,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		P2down = new MazeSpritePlayer("data\\images\\player2\\コス倒れ.png");
 		//2P
 		Player2 = new MazeSpritePlayer("data\\images\\player2\\コス下.png");
-		Player2.setPosition(18.0, 18.0);
+		Player2.setPosition(22.0, 18.0);
 		Player2.setCollisionRadius(0.5);
 		universe.place(Player2);
 
