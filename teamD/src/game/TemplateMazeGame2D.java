@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import framework.RWT.RWTContainer;
 import framework.RWT.RWTFrame3D;
 import framework.RWT.RWTVirtualController;
+import framework.audio.BGM3D;
+import framework.audio.Sound3D;
 import framework.gameMain.IGameState;
 import framework.gameMain.SimpleMazeGame;
 import framework.model3D.Universe;
@@ -33,6 +35,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	private long putt = 0;
 	private long expt = 0;
 	private long lastTime;
+	private Sound3D actionBGM = BGM3D.registerBGM("data\\BGM\\BGM.wav");
 	
 	public TemplateMazeGame2D() {
 		startGameState = new IGameState() {
@@ -92,6 +95,8 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
         bom2 = new bomb("data\\images\\bakudan\\”š’e.png");
         bome2 = new bombe("data\\images\\bakudan\\”š”­.png");
         
+        //BGM
+        BGM3D.playBGM(actionBGM);
 	}
 
 	@Override
