@@ -33,6 +33,8 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 	private long putt = 0;
 	private long expt = 0;
 	private long lastTime;
+	int up = 0, down = 1, left = 2, right = 3;
+	int muki = 0;
 	
 	public TemplateMazeGame2D() {
 		startGameState = new IGameState() {
@@ -81,8 +83,8 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 		universe.place(Player1);
 		
 		//2P
-		Player2 = new MazeSpritePlayer("data\\images\\santa3\\サンタ下.png");
-		Player2.setPosition(18.0, 18.0);
+		Player2 = new MazeSpritePlayer("data\\images\\player2\\コス下.png");
+		Player2.setPosition(22.0, 18.0);
 		Player2.setCollisionRadius(0.5);
 		universe.place(Player2);
 		
@@ -113,6 +115,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 
 		// 速度が0.0にするフラグが立っていれば、速度を0にする
 		if (resetVelocity) {
+			Player1.setPosition(Player1.getPosition().getX(),Player1.getPosition().getY());
 			Player1.setVelocity(0.0, 0.0);
 			disableControl1 = false;
 		}
@@ -130,6 +133,7 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 
 		// 速度が0.0にするフラグが立っていれば、速度を0にする
 		if (resetVelocity) {
+			Player2.setPosition(Player2.getPosition().getX(),Player2.getPosition().getY());
 			Player2.setVelocity(0.0, 0.0);
 			disableControl2 = false;
 		}
@@ -141,21 +145,29 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 					// 左 : a
 					if (virtualController.isKeyDown(0, RWTVirtualController.LEFT)) {
 						Player1.setVelocity(-speed, 0.0);
+						Player1.setImage("data\\images\\santa3\\サンタ左.png");
+						muki =left;
 						disableControl1 = true;
 					}
 					// 右 : d
 					else if (virtualController.isKeyDown(0, RWTVirtualController.RIGHT)) {
 						Player1.setVelocity(speed, 0.0);
+						Player1.setImage("data\\images\\santa3\\サンタ右.png");
+						muki =right;
 						disableControl1 = true;
 					}
 					// 上 : w
 					else if (virtualController.isKeyDown(0, RWTVirtualController.UP)) {
 						Player1.setVelocity(0.0, speed);
+						Player1.setImage("data\\images\\santa3\\サンタ上.png");
+						muki =up;
 						disableControl1 = true;
 					}
 					// 下 : s
 					else if (virtualController.isKeyDown(0, RWTVirtualController.DOWN)) {
 						Player1.setVelocity(0.0, -speed);
+						Player1.setImage("data\\images\\santa3\\サンタ下.png");
+						muki =down;
 						disableControl1 = true;
 					}
 					if (virtualController.isKeyDown(0, RWTVirtualController.BUTTON_B)) {
@@ -187,28 +199,36 @@ public class TemplateMazeGame2D extends SimpleMazeGame {
 						displace = false;
 					}
 					//ボムをvで置いて爆破
-				
+					
 				Player1.motion(interval, mazeGround);
 				}
 				//2P
 				// 左 : k
 				if (virtualController.isKeyDown(1, RWTVirtualController.LEFT)) {
 					Player2.setVelocity(-speed, 0.0);
+					Player2.setImage("data\\images\\player2\\コス左.png");
+					muki = left;
 					disableControl2 = true;
 				}
 				// 右 : ;
 				else if (virtualController.isKeyDown(1, RWTVirtualController.RIGHT)) {
 					Player2.setVelocity(speed, 0.0);
+					Player2.setImage("data\\images\\player2\\コス右.png");
+					muki = right;
 					disableControl2 = true;
 				}
 				// 上 : o
 				else if (virtualController.isKeyDown(1, RWTVirtualController.UP)) {
 					Player2.setVelocity(0.0, speed);
+					Player2.setImage("data\\images\\player2\\コス上.png");
+					muki = up;
 					disableControl2 = true;
 				}
 				// 下 : l
 				else if (virtualController.isKeyDown(1, RWTVirtualController.DOWN)) {
 					Player2.setVelocity(0.0, -speed);
+					Player2.setImage("data\\images\\player2\\コス下.png");
+					muki = down;
 					disableControl2 = true;
 				}
 				if (virtualController.isKeyDown(1, RWTVirtualController.BUTTON_A)) {
