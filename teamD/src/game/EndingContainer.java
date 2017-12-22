@@ -42,6 +42,8 @@ public class EndingContainer extends RWTContainer {
 		addWidget(startLabel2);
 		startLabel3.setFont(f2);
 		addWidget(startLabel3);
+		
+		repaint();
 	}
 
 	@Override
